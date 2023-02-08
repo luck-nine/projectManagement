@@ -4,12 +4,12 @@
 #======================================#
 
 # 产品或项目名称、软件开发公司名称
-productName: JeeSite Demo
-companyName: ThinkGem
+productName: 企业项目管理系统
+companyName: 刘正阳
 
 # 产品版本、版权年份
-productVersion: V4.3
-copyrightYear: 2021
+productVersion: V1.0
+copyrightYear: 2023
 
 #是否演示模式
 demoMode: false
@@ -234,7 +234,7 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-web
+    name: project-web
     
   # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
