@@ -13,8 +13,8 @@ var themeName = @Global.getConfig('web.view.themeName', 'default');
 <% include('/themes/'+themeName+'/include/header.html', {libs: libs!}){} %>
 </head><body class="hold-transition ${bodyClass!}">
 <% if (!@ListUtils.inString('layout', libs!)){ %>
-<div class="wrapper" style="background-image: url('${ctxStatic}/images/login.jpg');background-repeat: no-repeat;
-     background-size: 90% 100%;background-position-x: center;background-position-y: center;">${layoutContent}</div>
+<div class="wrapper" style="background-image: url('${ctxStatic}/images/login.png');background-repeat: no-repeat;
+     background-size: 96% 100%;background-position-x: center;background-position-y: center;">${layoutContent}</div>
 <% }else{ %>${layoutContent}<% } %>
 <a id="scroll-up" href="#" class="btn btn-sm hide"><i class="fa fa-angle-double-up"></i></a>
 <% include('/themes/'+themeName+'/include/footer.html', {libs: libs!}){} %>

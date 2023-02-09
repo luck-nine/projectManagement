@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box" style="margin:7% auto 300px auto;">
 	<div class="login-logo">
-		<a href="${ctx}/login" style="color: #FF5722;"><b>${@Global.getConfig('productName')}</b>
+		<a href="${ctx}/login" style="color: #3232CD;"><b>${@Global.getConfig('productName')}</b>
 			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
 	<div class="login-box-body">
@@ -100,10 +100,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="login-copyright" style="color: #FF5722;">
+	<div class="login-copyright">
 		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - 作者：<a
 			id="loginKey" data-key="${@Global.getConfig('shiro.loginSubmit.secretKey')}"
-			href="" target="_blank" style="color: #FF5722;">刘正阳</a>
+			href="" target="_blank">刘正阳</a>
 	</div>
 </div>
 <% } %>
