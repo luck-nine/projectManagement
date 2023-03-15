@@ -1,0 +1,56 @@
+<% layout('/layouts/default.html', {title: '', bodyClass: ''}){ %>
+<div class="main-content">
+    <div class="box box-main">
+        <div class="box-body">
+            <div class="body-title">welcome！</div>
+            <img src="${ctxStatic}/images/login.png">
+            <div class="body-text">欢迎登录企业项目管理系统</div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<style>
+    html,body, .wrapper, .main-content, .box{
+        width: 100%;
+        height: 100%;
+    }
+    .box-body{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .box-body img{
+        width: 45%;
+    }
+    .body-title{
+        font-size: 80px;
+        font-family: Alibaba Sans-Regular, Alibaba Sans;
+        font-weight: 400;
+        line-height: 124px;
+        background: linear-gradient(360deg, #0B2071 0%, #0074C3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .body-text{
+        font-size: 36px;
+        font-family: Source Han Sans CN-Bold, Source Han Sans CN;
+        font-weight: 700;
+        color: #3D3D3D;
+        line-height: 52px;
+        letter-spacing: 3px;
+    }
+    @media (max-width: 1080px) {
+        .body-title{
+            font-size: 45px;
+            line-height: 60px;
+        }
+        .body-text{
+            font-size: 25px;
+            line-height: 35px;
+        }
+    }
+</style>
