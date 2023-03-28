@@ -39,7 +39,13 @@
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-project</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
