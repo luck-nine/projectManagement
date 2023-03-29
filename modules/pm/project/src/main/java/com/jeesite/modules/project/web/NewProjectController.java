@@ -85,7 +85,7 @@ public class NewProjectController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated Project project) {
-		//project.setId(project.getProjectCode());
+		project.setId(project.getProjectCode());
 		newProjectService.save(project);
 		return Project.NOT_EFFECTIVE == project.getHasEffective() ?
 				renderResult(Global.TRUE, text("保存项目信息成功！")) :
