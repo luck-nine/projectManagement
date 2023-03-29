@@ -5,7 +5,8 @@ package com.jeesite.modules.project.service;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.project.dao.ProjectDao;
+import com.jeesite.modules.project.dao.NewProjectDao;
+import com.jeesite.modules.project.entity.NewProject;
 import com.jeesite.modules.project.entity.Project;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,75 +21,72 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly=true)
-public class NewProjectService extends CrudService<ProjectDao, Project> {
+public class NewProjectService extends CrudService<NewProjectDao, NewProject> {
 	
 	/**
 	 * 获取单条数据
-	 * @param project
-	 * @return
+	 * @param newProject
 	 */
 	@Override
-	public Project get(Project project) {
-		return super.get(project);
+	public NewProject get(NewProject newProject) {
+		return super.get(newProject);
 	}
 	
 	/**
 	 * 查询分页数据
-	 * @param project 查询条件
-	 * @param project.page 分页对象
-	 * @return
+	 * @param newProject 查询条件
 	 */
 	@Override
-	public Page<Project> findPage(Project project) {
-		return super.findPage(project);
+	public Page<NewProject> findPage(NewProject newProject) {
+		return super.findPage(newProject);
 	}
 	
 	/**
 	 * 保存数据（插入或更新）
-	 * @param project
+	 * @param newProject
 	 */
 	@Override
 	@Transactional(readOnly=false)
-	public void save(Project project) {
-		super.save(project);
+	public void save(NewProject newProject) {
+		super.save(newProject);
 	}
 	
 	/**
 	 * 更新状态
-	 * @param project
+	 * @param newProject
 	 */
 	@Override
 	@Transactional(readOnly=false)
-	public void updateStatus(Project project) {
-		super.updateStatus(project);
+	public void updateStatus(NewProject newProject) {
+		super.updateStatus(newProject);
 	}
 	
 	/**
 	 * 删除数据
-	 * @param project
+	 * @param newProject
 	 */
 	@Override
 	@Transactional(readOnly=false)
-	public void delete(Project project) {
-		super.delete(project);
+	public void delete(NewProject newProject) {
+		super.delete(newProject);
 	}
 
-	public Project buildSaleContractCode(Project project) {
-		if (null != project.getId()) {
-			return project;
+	public Project buildSaleContractCode(NewProject newProject) {
+		if (null != newProject.getId()) {
+			return newProject;
 		} else {
 			Calendar calendar = Calendar.getInstance();
 			String projectCode = "PM" + calendar.get(Calendar.YEAR) + "-";
-			List<Project> existList = dao.findList(project);
+			List<NewProject> existList = dao.findList(newProject);
 			if (existList.size() == 0) {
-				project.setProjectCode(projectCode + "01");
+				newProject.setProjectCode(projectCode + "01");
 			} else {
 				String lastCode = existList.get(existList.size() - 1).getProjectCode();
 				int i = Integer.parseInt(lastCode.substring(7)) + 1;
-				project.setProjectCode(projectCode + (i < 10 ? "0" + i : i));
+				newProject.setProjectCode(projectCode + (i < 10 ? "0" + i : i));
 			}
-			project.setIsNewRecord(true);
+			newProject.setIsNewRecord(true);
 		}
-		return project;
+		return newProject;
 	}
 }

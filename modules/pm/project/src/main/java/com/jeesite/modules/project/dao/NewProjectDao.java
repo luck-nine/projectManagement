@@ -5,7 +5,7 @@ package com.jeesite.modules.project.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.project.entity.Project;
+import com.jeesite.modules.project.entity.NewProject;
 
 /**
  * 项目信息DAO接口
@@ -13,6 +13,6 @@ import com.jeesite.modules.project.entity.Project;
  * @version 2023-03-28
  */
 @MyBatisDao
-public interface NewProjectDao extends CrudDao<Project> {
+public interface NewProjectDao extends CrudDao<NewProject> {
 	
 }

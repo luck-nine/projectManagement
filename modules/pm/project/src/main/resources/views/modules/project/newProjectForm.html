@@ -9,7 +9,7 @@
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			</div>
 		</div>
-		<#form:form id="inputForm" model="${project}" action="${ctx}/project/newProject/save" method="post" class="form-horizontal">
+		<#form:form id="inputForm" model="${newProject}" action="${ctx}/project/newProject/save" method="post" class="form-horizontal">
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
@@ -39,8 +39,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('项目负责人')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="principal" title="负责人选择"
-								path="principal.userCode" labelPath="principal"
+								<#form:treeselect id="principalCode" title="负责人选择"
+								path="principalCode" labelPath="userName"
 								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true" class="form-control required"/>
 							</div>
 						</div>

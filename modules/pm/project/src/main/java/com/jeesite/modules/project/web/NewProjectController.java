@@ -6,6 +6,7 @@ package com.jeesite.modules.project.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.project.entity.NewProject;
 import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.project.service.NewProjectService;
 import com.jeesite.modules.project.service.ProjectService;
@@ -41,7 +42,7 @@ public class NewProjectController extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public Project get(String id, boolean isNewRecord) {
+	public NewProject get(String id, boolean isNewRecord) {
 		return newProjectService.get(id, isNewRecord);
 	}
 	
@@ -50,8 +51,8 @@ public class NewProjectController extends BaseController {
 	 */
 	@RequiresPermissions("project:newProject:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Project project, Model model) {
-		model.addAttribute("project", project);
+	public String list(NewProject newProject, Model model) {
+		model.addAttribute("newProject", newProject);
 		return "modules/project/newProjectList";
 	}
 	
@@ -61,10 +62,10 @@ public class NewProjectController extends BaseController {
 	@RequiresPermissions("project:newProject:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public Page<Project> listData(Project project, HttpServletRequest request, HttpServletResponse response) {
-		project.setHasEffective(Project.NOT_EFFECTIVE);
-		project.setPage(new Page<>(request, response));
-		Page<Project> page = newProjectService.findPage(project);
+	public Page<NewProject> listData(NewProject newProject, HttpServletRequest request, HttpServletResponse response) {
+		newProject.setHasEffective(Project.NOT_EFFECTIVE);
+		newProject.setPage(new Page<>(request, response));
+		Page<NewProject> page = newProjectService.findPage(newProject);
 		return page;
 	}
 
@@ -73,9 +74,9 @@ public class NewProjectController extends BaseController {
 	 */
 	@RequiresPermissions("project:newProject:view")
 	@RequestMapping(value = "form")
-	public String form(Project project, Model model) {
-		newProjectService.buildSaleContractCode(project);
-		model.addAttribute("project", project);
+	public String form(NewProject newProject, Model model) {
+		newProjectService.buildSaleContractCode(newProject);
+		model.addAttribute("project", newProject);
 		return "modules/project/newProjectForm";
 	}
 
@@ -85,9 +86,9 @@ public class NewProjectController extends BaseController {
 	@RequiresPermissions("project:newProject:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Project project) {
-		newProjectService.save(project);
-		return Project.NOT_EFFECTIVE == project.getHasEffective() ?
+	public String save(@Validated NewProject newProject) {
+		newProjectService.save(newProject);
+		return Project.NOT_EFFECTIVE == newProject.getHasEffective() ?
 				renderResult(Global.TRUE, text("保存项目信息成功！")) :
 				renderResult(Global.TRUE, text("提交项目信息成功！"));
 	}
@@ -98,8 +99,8 @@ public class NewProjectController extends BaseController {
 	@RequiresPermissions("project:newProject:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
-	public String delete(Project project) {
-		newProjectService.delete(project);
+	public String delete(NewProject newProject) {
+		newProjectService.delete(newProject);
 		return renderResult(Global.TRUE, text("删除项目信息成功！"));
 	}
 }

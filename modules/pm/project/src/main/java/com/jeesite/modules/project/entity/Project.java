@@ -13,14 +13,15 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
  * 项目信息Entity
+ *
  * @author Liuzy
  * @version 2023-03-28
  */
-@Table(name="pm_project", alias="a", label="项目信息信息", columns={
+@Table(name="pm_project", alias="a", label="项目信息", columns={
 		@Column(name="id", attrName="id", label="标识"),
 		@Column(name="project_code", attrName="projectCode", label="项目编码", isPK=true),
 		@Column(name="project_name", attrName="projectName", label="项目名称", queryType=QueryType.LIKE),
-		@Column(name="principal", attrName="principal", label="项目负责人"),
+		@Column(name="principal_code", attrName="principalCode", label="负责人编码"),
 		@Column(name="project_description", attrName="projectDescription", label="项目描述"),
 		@Column(name="has_effective", attrName="hasEffective", label="是否提交", comment="是否提交（0：否 1：是）", isUpdateForce = true),
 		@Column(name="status", attrName="status", label="状态", comment="状态（0正常 1删除 2停用）", isUpdate=false),
@@ -37,7 +38,7 @@ public class Project extends DataEntity<Project> {
 	private static final long serialVersionUID = 1L;
 	private String projectCode;		// 项目编码
 	private String projectName;		// 项目名称
-	private String principal;		// 项目负责人
+	private String principalCode;		// 负责人编码
 	private String projectDescription;		// 项目描述
 	private Integer hasEffective;		// 是否提交（0：否 1：是）
 	
@@ -69,12 +70,12 @@ public class Project extends DataEntity<Project> {
 	}
 	
 	@Length(min=0, max=64, message="项目负责人长度不能超过 64 个字符")
-	public String getPrincipal() {
-		return principal;
+	public String getPrincipalCode() {
+		return principalCode;
 	}
 
-	public void setPrincipal(String principal) {
-		this.principal = principal;
+	public void setPrincipalCode(String principalCode) {
+		this.principalCode = principalCode;
 	}
 	
 	@Length(min=0, max=255, message="项目描述长度不能超过 255 个字符")
