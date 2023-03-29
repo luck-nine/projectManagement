@@ -20,6 +20,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required">*</span> ${text('项目编码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
 								<#form:input path="projectCode" maxlength="64" class="form-control required"/>
 							</div>
 						</div>
@@ -40,7 +41,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="principal" title="负责人选择"
 								path="principal.userCode" labelPath="principal"
-								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
+								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true" class="form-control required"/>
 							</div>
 						</div>
 					</div>
@@ -82,6 +83,7 @@
 
 	$('#btnSubmit').click(function () {
 		$('#hasEffective').val(0);
+		$("*:not(#projectCode)").removeClass('required');
 		$('#inputForm').submit();
 	})
 

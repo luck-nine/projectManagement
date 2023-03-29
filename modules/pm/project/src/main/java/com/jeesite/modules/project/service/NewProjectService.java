@@ -10,6 +10,9 @@ import com.jeesite.modules.project.entity.Project;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * 项目信息Service
  * @author Liuzy
@@ -69,5 +72,23 @@ public class NewProjectService extends CrudService<ProjectDao, Project> {
 	public void delete(Project project) {
 		super.delete(project);
 	}
-	
+
+	public Project buildSaleContractCode(Project project) {
+		if (null != project.getId()) {
+			return project;
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			String projectCode = "PM" + calendar.get(Calendar.YEAR) + "-";
+			List<Project> existList = dao.findList(project);
+			if (existList.size() == 0) {
+				project.setProjectCode(projectCode + "01");
+			} else {
+				String lastCode = existList.get(existList.size() - 1).getProjectCode();
+				int i = Integer.parseInt(lastCode.substring(7)) + 1;
+				project.setProjectCode(projectCode + (i < 10 ? "0" + i : i));
+			}
+			project.setIsNewRecord(true);
+		}
+		return project;
+	}
 }

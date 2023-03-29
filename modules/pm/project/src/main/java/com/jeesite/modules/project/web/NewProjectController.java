@@ -74,6 +74,7 @@ public class NewProjectController extends BaseController {
 	@RequiresPermissions("project:newProject:view")
 	@RequestMapping(value = "form")
 	public String form(Project project, Model model) {
+		newProjectService.buildSaleContractCode(project);
 		model.addAttribute("project", project);
 		return "modules/project/newProjectForm";
 	}
@@ -85,7 +86,6 @@ public class NewProjectController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated Project project) {
-		project.setId(project.getProjectCode());
 		newProjectService.save(project);
 		return Project.NOT_EFFECTIVE == project.getHasEffective() ?
 				renderResult(Global.TRUE, text("保存项目信息成功！")) :
