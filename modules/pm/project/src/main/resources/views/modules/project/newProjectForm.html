@@ -37,7 +37,9 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('项目负责人')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="principal" maxlength="64" class="form-control"/>
+								<#form:treeselect id="principal" title="负责人选择"
+								path="principal.userCode" labelPath="principal"
+								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
 							</div>
 						</div>
 					</div>
