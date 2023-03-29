@@ -9,9 +9,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.project.entity.NewProject;
 import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.project.service.NewProjectService;
-import com.jeesite.modules.project.service.ProjectService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -87,9 +85,6 @@ public class NewProjectController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated NewProject newProject) {
-		/*if (NewProject.DEPTROLE.equals(newProject.getRoleCode())) {
-			return renderResult(Global.FALSE, text(""));
-		}*/
 		newProjectService.save(newProject);
 		return Project.NOT_EFFECTIVE == newProject.getHasEffective() ?
 				renderResult(Global.TRUE, text("保存项目信息成功！")) :
