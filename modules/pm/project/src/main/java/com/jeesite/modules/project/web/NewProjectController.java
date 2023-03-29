@@ -87,6 +87,9 @@ public class NewProjectController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated NewProject newProject) {
+		/*if (NewProject.DEPTROLE.equals(newProject.getRoleCode())) {
+			return renderResult(Global.FALSE, text(""));
+		}*/
 		newProjectService.save(newProject);
 		return Project.NOT_EFFECTIVE == newProject.getHasEffective() ?
 				renderResult(Global.TRUE, text("保存项目信息成功！")) :

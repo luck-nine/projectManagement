@@ -14,6 +14,7 @@
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
 				<#form:hidden path="hasEffective" id="hasEffective"/>
+				<#form:hidden path="roleCode" id="roleCode"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -77,6 +78,11 @@
 <% } %>
 <script>
 	$('#btnMakeEffective').click(function () {
+		let roleType = $('#roleCode').val();
+		if ("" != roleType && "dept" != roleType){
+			js.showMessage("${text('项目负责人必须是部门经理，请重新选择负责人。')}", null, 'warning');
+			return false;
+		}
 		$('#hasEffective').val(1);
 		$('#inputForm').submit();
 	})
