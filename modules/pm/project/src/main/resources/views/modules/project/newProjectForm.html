@@ -13,6 +13,7 @@
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
+				<#form:hidden path="hasEffective" id="hasEffective"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -60,6 +61,9 @@
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
 						<% if (hasPermi('project:newProject:edit')){ %>
+							<button type="button" class="btn btn-sm btn-danger" id="btnMakeEffective"><i class="fa fa-check"></i> ${text('提 交')}</button>
+						<% } %>
+						<% if (hasPermi('project:newProject:edit')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
@@ -71,8 +75,17 @@
 </div>
 <% } %>
 <script>
-$("#inputForm").validate({
-	submitHandler: function(form){
+	$('#btnMakeEffective').click(function () {
+		$('#hasEffective').val(1);
+		$('#inputForm').submit();
+	})
+
+	$('#btnSubmit').click(function () {
+		$('#hasEffective').val(0);
+		$('#inputForm').submit();
+	})
+
+	function ajaxFormSubmit(form) {
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
@@ -81,6 +94,17 @@ $("#inputForm").validate({
 				});
 			}
 		}, "json");
-    }
-});
+	}
+
+	$("#inputForm").validate({
+		submitHandler: function(form){
+			if ($('#hasEffective').val() == "1") {
+				js.confirm('确定提交吗？', function (data) {
+					ajaxFormSubmit(form);
+				})
+			} else {
+				ajaxFormSubmit(form);
+			}
+		}
+	});
 </script>

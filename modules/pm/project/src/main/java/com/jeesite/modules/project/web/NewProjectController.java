@@ -62,6 +62,7 @@ public class NewProjectController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<Project> listData(Project project, HttpServletRequest request, HttpServletResponse response) {
+		project.setHasEffective(Project.NOT_EFFECTIVE);
 		project.setPage(new Page<>(request, response));
 		Page<Project> page = newProjectService.findPage(project);
 		return page;
@@ -84,8 +85,21 @@ public class NewProjectController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated Project project) {
+		//project.setId(project.getProjectCode());
 		newProjectService.save(project);
-		return renderResult(Global.TRUE, text("保存项目信息成功！"));
+		return Project.NOT_EFFECTIVE == project.getHasEffective() ?
+				renderResult(Global.TRUE, text("保存项目信息成功！")) :
+				renderResult(Global.TRUE, text("提交项目信息成功！"));
 	}
-	
+
+	/**
+	 * 删除数据
+	 */
+	@RequiresPermissions("project:newProject:edit")
+	@RequestMapping(value = "delete")
+	@ResponseBody
+	public String delete(Project project) {
+		newProjectService.delete(project);
+		return renderResult(Global.TRUE, text("删除项目信息成功！"));
+	}
 }
