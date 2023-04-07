@@ -15,6 +15,7 @@
 				<#form:hidden path="id"/>
 				<#form:hidden path="hasEffective" id="hasEffective"/>
 				<#form:hidden path="roleCode" id="roleCode"/>
+				<#form:hidden path="userName" id="userName"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -77,7 +78,12 @@
 </div>
 <% } %>
 <script>
+	let roleName = $('#userName').val();
 	$('#btnMakeEffective').click(function () {
+		if ($('#principalCodeName').val() != roleName) {
+			js.showMessage("${text('修改负责人后，请先保存再提交。')}", null, 'warning');
+			return false;
+		}
 		let roleType = $('#roleCode').val();
 		if ("" != roleType && "dept" != roleType){
 			js.showMessage("${text('项目负责人必须是部门经理，请重新选择负责人。')}", null, 'warning');
