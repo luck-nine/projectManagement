@@ -44,17 +44,27 @@ public class NewTaskController extends BaseController {
 	public NewTask get(String id, boolean isNewRecord) {
 		return newTaskService.get(id, isNewRecord);
 	}
-	
+
 	/**
 	 * 查询列表
 	 */
 	@RequiresPermissions("task:newTask:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Task task, Model model) {
-		model.addAttribute("task", task);
+	public String list(NewTask newTask, Model model) {
+		model.addAttribute("newTask", newTask);
 		return "modules/task/newTaskList";
 	}
-	
+
+	/**
+	 * 查看任务列表--跳转链接
+	 */
+	@RequiresPermissions("task:newTask:view")
+	@RequestMapping(value = {"newTaskList"})
+	public String newTaskList(NewTask newTask, Model model) {
+		model.addAttribute("newTask", newTask);
+		return "modules/task/newProjectTaskList";
+	}
+
 	/**
 	 * 查询列表数据
 	 */
@@ -70,13 +80,25 @@ public class NewTaskController extends BaseController {
 	}
 
 	/**
+	 * 查询任务列表数据
+	 */
+	@RequiresPermissions("task:newTask:view")
+	@RequestMapping(value = "taskListData")
+	@ResponseBody
+	public Page<NewTask> taskListData(NewTask newTask, HttpServletRequest request, HttpServletResponse response) {
+		newTask.setPage(new Page<>(request, response));
+		Page<NewTask> page = newTaskService.findPage(newTask);
+		return page;
+	}
+
+	/**
 	 * 查看编辑表单
 	 */
 	@RequiresPermissions("task:newTask:view")
 	@RequestMapping(value = "form")
 	public String form(NewTask newTask, Model model) {
 		model.addAttribute("task", newTask);
-		return "modules/task/newTaskForm";
+		return "modules/task/newProjectTaskForm";
 	}
 
 	/**

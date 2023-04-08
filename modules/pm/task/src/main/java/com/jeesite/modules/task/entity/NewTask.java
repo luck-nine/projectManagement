@@ -22,11 +22,10 @@ import java.util.Date;
  * @version 2023-04-07
  */
 @Table(name="pm_task", alias="a", label="任务信息信息", columns={
-		@Column(name="id", attrName="id", label="标识", isPK=true),
-		@Column(name="task_code", attrName="taskCode", label="任务编码"),
+		@Column(name="id", attrName="id", label="标识"),
+		@Column(name="task_code", attrName="taskCode", label="任务编码", isPK=true),
 		@Column(name="task_name", attrName="taskName", label="任务名称", queryType=QueryType.LIKE),
 		@Column(name="project_code", attrName="projectCode", label="项目编码"),
-		@Column(name="project_name", attrName="projectName", label="项目名称"),
 		@Column(name="task_actor", attrName="taskActor", label="任务执行人"),
 		@Column(name="task_description", attrName="taskDescription", label="任务描述"),
 		@Column(name="priority", attrName="priority", label="优先级", comment="优先级（编码，来自数据字典）"),
@@ -41,7 +40,7 @@ import java.util.Date;
 		@Column(name="update_by", attrName="updateBy", label="更新者", isQuery=false),
 		@Column(name="update_date", attrName="updateDate", label="更新时间", isQuery=false),
 	},joinTable = {
-		@JoinTable(type = JoinTable.Type.RIGHT_JOIN, entity = Project.class, alias = "p",
+		@JoinTable(type = JoinTable.Type.LEFT_JOIN, entity = Project.class, alias = "p",
 				on = "p.project_code=a.project_code", attrName = "this",
 				columns = {
 						@Column(name = "principal_code", attrName = "principalCode", label = "负责人编码")

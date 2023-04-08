@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-notebook"></i> ${text('新增任务信息')}
+				<i class="fa icon-notebook"></i> ${text('新增任务')}
 			</div>
 		</div>
 		<div class="box-body">
@@ -44,7 +44,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('task:newTask:edit')){ %>
-				actions.push('<a href="${ctx}/task/newTask/form?id='+row.projectCode+'" class="btn" title="${text("新增任务")}"><i class="fa fa-plus"></i>${text("新增")}</a>');
+				actions.push('<a href="${ctx}/task/newTask/newTaskList?projectCode='+row.projectCode+'" class="btn" title="${text("新增任务")}"><i class="fa fa-plus"></i>${text("新增")}</a>');
 			<% } %>
 			return actions.join('');
 		}}

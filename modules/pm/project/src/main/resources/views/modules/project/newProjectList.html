@@ -10,11 +10,11 @@
 				<% if(hasPermi('project:newProject:edit')){ %>
 					<a href="${ctx}/project/newProject/form" class="btn btn-default btnTool" title="${text('新增项目信息')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+				<a href="#" class="btn btn-default hide" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${newProject}" action="${ctx}/project/newProject/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${newProject}" action="${ctx}/project/newProject/listData" method="post" class="form-inline"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('项目编码')}：</label>
@@ -31,13 +31,9 @@
 				<div class="form-group">
 					<label class="control-label">${text('项目负责人')}：</label>
 					<div class="control-inline">
-						<#form:input path="userName" maxlength="64" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('项目描述')}：</label>
-					<div class="control-inline">
-						<#form:input path="projectDescription" maxlength="255" class="form-control width-120"/>
+						<#form:treeselect id="principalCode" title="负责人选择"
+						path="principalCode" labelPath="userName"
+						url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true" class="form-control required"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -65,7 +61,7 @@ $('#dataGrid').dataGrid({
 			var actions = [];
 			<% if(hasPermi('project:newProject:edit')){ %>
 				actions.push('<a href="${ctx}/project/newProject/form?id='+row.id+'" class="btnList" title="${text("编辑项目信息")}"><i class="fa fa-pencil"></i><span class="actions-text">编辑</span></a>&nbsp;');
-				actions.push('<a href="${ctx}/project/newProject/delete?id='+row.id+'" class="btnList" title="${text("删除项目信息")}" data-confirm="${text("确认要删除该项目信息吗？")}"><i class="fa fa-trash-o"></i><span class="actions-text">删除</span></a>');
+				actions.push('<a href="${ctx}/project/newProject/delete?id='+row.id+'" class="btnList" title="${text("删除项目信息")}" data-confirm="${text("确认要删除该项目信息吗？")}"><i class="fa fa-trash-o"></i><span class="actions-text">删除</span></a>&nbsp');
 			<% } %>
 			return actions.join('');
 		}}
