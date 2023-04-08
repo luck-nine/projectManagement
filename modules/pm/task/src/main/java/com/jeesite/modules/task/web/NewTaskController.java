@@ -6,6 +6,7 @@ package com.jeesite.modules.task.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.task.entity.NewTask;
 import com.jeesite.modules.task.entity.Task;
 import com.jeesite.modules.task.service.NewTaskService;
@@ -109,7 +110,9 @@ public class NewTaskController extends BaseController {
 	@ResponseBody
 	public String save(@Validated NewTask newTask) {
 		newTaskService.save(newTask);
-		return renderResult(Global.TRUE, text("保存任务信息成功！"));
+		return Task.NOT_EFFECTIVE == newTask.getHasEffective() ?
+				renderResult(Global.TRUE, text("保存任务信息成功！")) :
+				renderResult(Global.TRUE, text("提交任务信息成功！"));
 	}
 	
 	/**

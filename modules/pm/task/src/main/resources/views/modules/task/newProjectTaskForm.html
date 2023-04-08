@@ -13,6 +13,7 @@
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
+				<#form:hidden path="hasEffective" id="hasEffective"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -97,7 +98,7 @@
 								<span class="required hide">*</span> ${text('任务开始日期')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="taskBeginDate" readonly="true" maxlength="20" class="form-control laydate"
-									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -107,7 +108,7 @@
 								<span class="required hide">*</span> ${text('任务结束日期')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="taskEndDate" readonly="true" maxlength="20" class="form-control laydate"
-									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -138,6 +139,9 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('project:newProject:edit')){ %>
+						<button type="button" class="btn btn-sm btn-danger" id="btnMakeEffective"><i class="fa fa-check"></i> ${text('提 交')}</button>
+						<% } %>
 						<% if (hasPermi('task:newTask:edit')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
@@ -150,6 +154,11 @@
 </div>
 <% } %>
 <script>
+	$('#btnMakeEffective').click(function () {
+		$('#hasEffective').val(1);
+		$('#inputForm').submit();
+	})
+
 	$('#btnSubmit').click(function () {
 		$('#hasEffective').val(0);
 		$("*:not(#projectCode)").removeClass('required');

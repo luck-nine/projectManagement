@@ -41,7 +41,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 	}, orderBy="a.update_date DESC"
 )
 public class Task extends DataEntity<Task> {
-	
+
+	public final static int NOT_EFFECTIVE = 0;
+	public final static int EFFECTIVE = 1;
 	private static final long serialVersionUID = 1L;
 	private String taskCode;		// 任务编码
 	private String taskName;		// 任务名称
@@ -136,7 +138,7 @@ public class Task extends DataEntity<Task> {
 		this.accomplishDescription = accomplishDescription;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getTaskBeginDate() {
 		return taskBeginDate;
 	}
@@ -145,7 +147,7 @@ public class Task extends DataEntity<Task> {
 		this.taskBeginDate = taskBeginDate;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getTaskEndDate() {
 		return taskEndDate;
 	}

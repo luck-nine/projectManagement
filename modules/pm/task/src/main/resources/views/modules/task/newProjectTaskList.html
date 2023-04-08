@@ -49,21 +49,21 @@
 				<div class="form-group">
 					<label class="control-label">${text('任务开始日期')}：</label>
 					<div class="control-inline">
-						<#form:input path="taskBeginDate_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
-							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="taskBeginDate_lte.click()"/>
+						<#form:input path="taskBeginDate_gte" readonly="true" maxlength="20" class="form-control laydate width-120"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="taskBeginDate_lte.click()"/>
 						&nbsp;-&nbsp;
-						<#form:input path="taskBeginDate_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
-							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+						<#form:input path="taskBeginDate_lte" readonly="true" maxlength="20" class="form-control laydate width-120"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('任务结束日期')}：</label>
 					<div class="control-inline">
-						<#form:input path="taskEndDate_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
-							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="taskEndDate_lte.click()"/>
+						<#form:input path="taskEndDate_gte" readonly="true" maxlength="20" class="form-control laydate width-120"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="taskEndDate_lte.click()"/>
 						&nbsp;-&nbsp;
-						<#form:input path="taskEndDate_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
-							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+						<#form:input path="taskEndDate_lte" readonly="true" maxlength="20" class="form-control laydate width-120"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -85,7 +85,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("任务编码")}', name:'taskCode', index:'a.task_code', width:150, align:"center"},
 		{header:'${text("任务名称")}', name:'taskName', index:'a.task_name', width:150, align:"center"},
 		{header:'${text("项目编码")}', name:'projectCode', index:'a.project_code', width:150, align:"center"},
-		{header:'${text("任务执行人")}', name:'taskActor', index:'a.task_actor', width:150, align:"center"},
+		{header:'${text("任务执行人")}', name:'actorName', index:'o.user_name', width:150, align:"center"},
 		{header:'${text("任务描述")}', name:'taskDescription', index:'a.task_description', width:150, align:"center"},
 		{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
@@ -96,7 +96,6 @@ $('#dataGrid').dataGrid({
 		{header:'${text("完成说明")}', name:'accomplishDescription', index:'a.accomplish_description', width:150, align:"center"},
 		{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
 		{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
-		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('task:newTask:edit')){ %>
