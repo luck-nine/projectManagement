@@ -46,6 +46,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-task</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>

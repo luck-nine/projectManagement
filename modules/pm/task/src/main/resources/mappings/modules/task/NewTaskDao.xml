@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.task.dao.NewTaskDao">
+	<select id="findProjectList" resultType="com.jeesite.modules.task.entity.NewTask">
+		SELECT
+			p.project_code AS projectCode,
+			p.project_name AS projectName,
+			p.update_date AS updateDate,
+			u.user_name AS userName
+		FROM
+			pm_task a
+				RIGHT JOIN pm_project p ON p.project_code = a.project_code
+				LEFT JOIN js_sys_user u ON u.user_code = p.principal_code
+		WHERE
+			p.status = '0' AND p.has_effective = 1
+		<if test="projectCode != null and projectCode != ''">
+			and p.project_code like concat( '%', #{projectCode}, '%')
+		</if>
+		<if test="projectName != null and projectName != ''">
+			and p.project_name like concat( '%', #{projectName}, '%')
+		</if>
+		ORDER BY
+			p.project_code ASC
+	</select>
+	
+</mapper>

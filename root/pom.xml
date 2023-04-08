@@ -19,6 +19,7 @@
         <module>../modules/cms</module>
         <module>../web</module>
         <module>../modules/pm/project</module>
+        <module>../modules/pm/task</module>
     </modules>
 
     <developers>
