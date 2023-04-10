@@ -60,9 +60,6 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('project:viewProject:edit')){ %>
-							<button type="button" class="btn btn-sm btn-danger" id="btnRollBack"><i class="fa fa-check"></i> ${text('回 退')}</button>&nbsp;
-						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 					</div>
 				</div>
@@ -72,31 +69,16 @@
 </div>
 <% } %>
 <script>
-	$('#btnRollBack').click(function () {
-		$('#hasEffective').val(0);
-		$('#inputForm').submit();
-	})
-
-	function ajaxFormRollBack(form) {
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
-			}
-		}, "json");
-	}
-
 	$("#inputForm").validate({
 		submitHandler: function(form){
-			if ($('#hasEffective').val() == "0") {
-				js.confirm('确定回退吗？', function (data) {
-					ajaxFormRollBack(form);
-				})
-			} else {
-				ajaxFormRollBack(form);
-			}
+			js.ajaxSubmitForm($(form), function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			}, "json");
 		}
 	});
 </script>
