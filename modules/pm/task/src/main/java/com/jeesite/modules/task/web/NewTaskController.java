@@ -98,7 +98,8 @@ public class NewTaskController extends BaseController {
 	@RequiresPermissions("task:newTask:view")
 	@RequestMapping(value = "form")
 	public String form(NewTask newTask, Model model) {
-		model.addAttribute("task", newTask);
+		newTaskService.buildTaskCode(newTask);
+		model.addAttribute("newTask", newTask);
 		return "modules/task/newProjectTaskForm";
 	}
 

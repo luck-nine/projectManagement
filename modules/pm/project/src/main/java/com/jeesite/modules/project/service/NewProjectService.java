@@ -71,7 +71,7 @@ public class NewProjectService extends CrudService<NewProjectDao, NewProject> {
 		super.delete(newProject);
 	}
 
-	public Project buildSaleContractCode(NewProject newProject) {
+	public NewProject buildSaleContractCode(NewProject newProject) {
 		if (null != newProject.getId()) {
 			return newProject;
 		} else {

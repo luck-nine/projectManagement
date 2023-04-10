@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-note"></i> ${text(task.isNewRecord ? '新增任务信息' : '编辑任务信息')}
+				<i class="fa icon-note"></i> ${text(newTask.isNewRecord ? '新增任务信息' : '编辑任务信息')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -21,7 +21,7 @@
 								<span class="required ">*</span> ${text('任务编码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:hidden path="isNewRecord"/>
-								<#form:input path="taskCode" maxlength="64" class="form-control required"/>
+								<#form:input path="taskCode" maxlength="64" class="form-control required"  readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -39,7 +39,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('项目编码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="projectCode" maxlength="64" class="form-control"/>
+								<#form:input path="projectCode" maxlength="64" class="form-control" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 							<label class="control-label col-sm-4">
 								<span class="required hide">*</span> ${text('说明图片')}：</label>
 							<div class="col-sm-8">
-								<#form:fileupload id="uploadImage" bizKey="${task.id}" bizType="task_image"
+								<#form:fileupload id="uploadImage" bizKey="${newTask.id}" bizType="task_image"
 									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
@@ -129,7 +129,7 @@
 							<label class="control-label col-sm-4">
 								<span class="required hide">*</span> ${text('相关附件')}：</label>
 							<div class="col-sm-8">
-								<#form:fileupload id="uploadFile" bizKey="${task.id}" bizType="task_file"
+								<#form:fileupload id="uploadFile" bizKey="${newTask.id}" bizType="task_file"
 									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
@@ -139,7 +139,7 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('project:newProject:edit')){ %>
+						<% if (hasPermi('task:newTask:edit')){ %>
 						<button type="button" class="btn btn-sm btn-danger" id="btnMakeEffective"><i class="fa fa-check"></i> ${text('提 交')}</button>
 						<% } %>
 						<% if (hasPermi('task:newTask:edit')){ %>

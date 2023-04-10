@@ -6,11 +6,14 @@ package com.jeesite.modules.task.service;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.task.dao.NewTaskDao;
 import com.jeesite.modules.task.entity.NewTask;
+import com.jeesite.modules.task.entity.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -82,5 +85,27 @@ public class NewTaskService extends CrudService<NewTaskDao, NewTask> {
 	 */
 	public List<NewTask> findProjectList(NewTask newTask) {
 		return dao.findProjectList(newTask);
+	}
+
+	/**
+	 * 自动生成任务编码
+	 * @param newTask
+	 */
+	public NewTask buildTaskCode(NewTask newTask) {
+		if (null != newTask.getId()) {
+			return newTask;
+		} else {
+			String taskCode = "PM" + newTask.getProjectCode().substring(7) + "-task";
+			List<NewTask> existList = dao.findList(newTask);
+			if (existList.size() == 0) {
+				newTask.setTaskCode(taskCode + "001");
+			} else {
+				String lastCode = existList.get(existList.size() - 1).getTaskCode();
+				int i = Integer.parseInt(lastCode.substring(9)) + 1;
+				newTask.setTaskCode(taskCode + (i < 10 ? "00" + i : "0" + i));
+			}
+			newTask.setIsNewRecord(true);
+		}
+		return newTask;
 	}
 }

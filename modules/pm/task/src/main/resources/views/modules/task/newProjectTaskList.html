@@ -7,7 +7,7 @@
 			</div>
 			<div class="box-tools pull-right">
 				<% if(hasPermi('task:newTask:edit')){ %>
-					<a href="${ctx}/task/newTask/form" class="btn btn-default btnTool" title="${text('新增任务信息')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/task/newTask/form?projectCode=${newTask.projectCode}" class="btn btn-default btnTool" title="${text('新增任务信息')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 			</div>
 		</div>
@@ -87,15 +87,15 @@ $('#dataGrid').dataGrid({
 		{header:'${text("项目编码")}', name:'projectCode', index:'a.project_code', width:150, align:"center"},
 		{header:'${text("任务执行人")}', name:'actorName', index:'o.user_name', width:150, align:"center"},
 		{header:'${text("任务描述")}', name:'taskDescription', index:'a.task_description', width:150, align:"center"},
+		{header:'${text("完成说明")}', name:'accomplishDescription', index:'a.accomplish_description', width:150, align:"center"},
+		{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
+		{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
 		{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("任务状态")}', name:'taskStatus', index:'a.task_status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text("完成说明")}', name:'accomplishDescription', index:'a.accomplish_description', width:150, align:"center"},
-		{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
-		{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('task:newTask:edit')){ %>

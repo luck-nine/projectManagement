@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeesite.modules.task.dao.NewTaskDao">
 	<select id="findProjectList" resultType="com.jeesite.modules.task.entity.NewTask">
-		SELECT
+		SELECT DISTINCT
 			p.project_code AS projectCode,
 			p.project_name AS projectName,
 			p.update_date AS updateDate,

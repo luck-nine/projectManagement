@@ -21,8 +21,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @version 2023-04-08
  */
 @Table(name="pm_task", alias="a", label="任务信息信息", columns={
-		@Column(name="id", attrName="id", label="标识", isPK=true),
-		@Column(name="task_code", attrName="taskCode", label="任务编码"),
+		@Column(name="id", attrName="id", label="标识"),
+		@Column(name="task_code", attrName="taskCode", label="任务编码", isPK=true),
 		@Column(name="task_name", attrName="taskName", label="任务名称", queryType=QueryType.LIKE),
 		@Column(name="project_code", attrName="projectCode", label="项目编码"),
 		@Column(name="task_actor", attrName="taskActor", label="任务执行人"),

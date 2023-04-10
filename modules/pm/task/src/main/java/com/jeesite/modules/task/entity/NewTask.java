@@ -3,13 +3,11 @@
  */
 package com.jeesite.modules.task.entity;
 
-import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.sys.entity.User;
-
 
 /**
  * 任务信息Entity
