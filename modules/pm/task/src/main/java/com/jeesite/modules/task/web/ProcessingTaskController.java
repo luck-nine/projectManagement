@@ -6,6 +6,7 @@ package com.jeesite.modules.task.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.ProcessingTask;
 import com.jeesite.modules.task.entity.Task;
 import com.jeesite.modules.task.service.ProcessingTaskService;
@@ -61,6 +62,7 @@ public class ProcessingTaskController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<ProcessingTask> listData(ProcessingTask processingTask, HttpServletRequest request, HttpServletResponse response) {
+		processingTask.setTaskActor("system".equals(UserUtils.getUser().getUserCode()) ? null : UserUtils.getUser().getUserCode());
 		processingTask.setHasEffective(Task.EFFECTIVE);
 		processingTask.setPage(new Page<>(request, response));
 		Page<ProcessingTask> page = processingTaskService.findPage(processingTask);
