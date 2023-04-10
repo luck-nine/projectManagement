@@ -37,6 +37,9 @@ import com.jeesite.modules.sys.entity.User;
 )
 public class NewTask extends Task {
 
+	public static final String WAITING = "0";
+	public static final String EXECUTORY = "1";
+	public static final String COMPLETED = "2";
 	private static final long serialVersionUID = 1L;
 	private String projectName;			// 项目名称
 	private String userName;		// 项目负责人

@@ -99,7 +99,10 @@ public class NewTaskController extends BaseController {
 	@RequiresPermissions("task:newTask:view")
 	@RequestMapping(value = "form")
 	public String form(NewTask newTask, Model model) {
-		newTaskService.buildTaskCode(newTask);
+		if (newTask.getIsNewRecord()) {
+			newTask.setTaskStatus(NewTask.WAITING);
+			newTaskService.buildTaskCode(newTask);
+		}
 		model.addAttribute("newTask", newTask);
 		return "modules/task/newProjectTaskForm";
 	}
