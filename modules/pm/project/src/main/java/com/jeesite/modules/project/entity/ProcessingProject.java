@@ -9,22 +9,22 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.modules.sys.entity.User;
 
 /**
- * 查看项目信息Entity
+ * 维护项目信息Entity
  *
  * @author Liuzy
- * @version 2023-03-28
+ * @version 2023-04-10
  */
-@Table(name="pm_project", alias="a", label="查看项目信息", columns={
+@Table(name="pm_project", alias="a", label="项目信息", columns={
 		@Column(includeEntity = Project.class),
-	}, joinTable = {
+}, joinTable = {
 		@JoinTable(type = JoinTable.Type.LEFT_JOIN, entity = User.class, alias = "u",
 				on = "u.user_code=a.principal_code", attrName = "this",
 				columns = {
-					@Column(name = "user_name", attrName = "userName", label = "用户姓名"),
+						@Column(name = "user_name", attrName = "userName", label = "用户姓名"),
 				}),
 }, orderBy="a.project_code"
 )
-public class ViewProject extends Project {
+public class ProcessingProject extends Project {
 
 	private static final long serialVersionUID = 1L;
 	private String userName;
@@ -36,4 +36,5 @@ public class ViewProject extends Project {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 }

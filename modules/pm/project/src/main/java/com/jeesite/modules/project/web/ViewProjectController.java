@@ -3,7 +3,6 @@
  */
 package com.jeesite.modules.project.web;
 
-import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.project.entity.Project;
@@ -13,7 +12,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -76,15 +74,4 @@ public class ViewProjectController extends BaseController {
 		return "modules/project/viewProjectCommitForm";
 	}
 
-	/**
-	 * 回退项目信息
-	 */
-	@RequiresPermissions("project:viewProject:edit")
-	@PostMapping(value = "rollback")
-	@ResponseBody
-	public String rollback(ViewProject viewProject) {
-		viewProject.setHasEffective(Project.NOT_EFFECTIVE);
-		viewProjectService.save(viewProject);
-		return renderResult(Global.TRUE, text("回退项目信息成功！"));
-	}
 }
