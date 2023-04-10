@@ -87,6 +87,7 @@ public class NewTaskController extends BaseController {
 	@RequestMapping(value = "taskListData")
 	@ResponseBody
 	public Page<NewTask> taskListData(NewTask newTask, HttpServletRequest request, HttpServletResponse response) {
+		newTask.setHasEffective(Task.NOT_EFFECTIVE);
 		newTask.setPage(new Page<>(request, response));
 		Page<NewTask> page = newTaskService.findPage(newTask);
 		return page;

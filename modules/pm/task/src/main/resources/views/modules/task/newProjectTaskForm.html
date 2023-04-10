@@ -30,7 +30,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('任务名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="taskName" maxlength="64" class="form-control"/>
+								<#form:input path="taskName" maxlength="64" class="form-control required"/>
 							</div>
 						</div>
 					</div>
@@ -49,7 +49,7 @@
 								<span class="required hide">*</span> ${text('任务执行人')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="taskActor" title="执行人选择"
-								path="taskActor" labelPath="userName"
+								path="taskActor" labelPath="actorName"
 								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true" class="form-control required"/>
 							</div>
 						</div>
@@ -79,7 +79,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('优先级')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="priority" dictType="pm_task_priority" blankOption="true" class="form-control" />
+								<#form:select path="priority" dictType="pm_task_priority" blankOption="true" class="form-control required" />
 							</div>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('任务状态')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="taskStatus" dictType="pm_task_status" blankOption="true" class="form-control" />
+								<#form:select path="taskStatus" dictType="pm_task_status" blankOption="true" class="form-control required" />
 							</div>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('任务开始日期')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="taskBeginDate" readonly="true" maxlength="20" class="form-control laydate"
+								<#form:input path="taskBeginDate" readonly="true" maxlength="20" class="form-control laydate required"
 									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
@@ -107,7 +107,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('任务结束日期')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="taskEndDate" readonly="true" maxlength="20" class="form-control laydate"
+								<#form:input path="taskEndDate" readonly="true" maxlength="20" class="form-control laydate required"
 									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
@@ -161,7 +161,6 @@
 
 	$('#btnSubmit').click(function () {
 		$('#hasEffective').val(0);
-		$("*:not(#projectCode)").removeClass('required');
 		$('#inputForm').submit();
 	})
 
