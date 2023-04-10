@@ -6,18 +6,15 @@ package com.jeesite.modules.task.service;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.task.dao.NewTaskDao;
 import com.jeesite.modules.task.entity.NewTask;
-import com.jeesite.modules.task.entity.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
- * 任务信息Service
+ * 新增任务Service
  * @author Liuzy
  * @version 2023-04-07
  */

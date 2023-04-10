@@ -1,0 +1,116 @@
+<% layout('/layouts/default.html', {title: '任务信息管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('处理任务')}
+			</div>
+			<div class="box-tools pull-right hide">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${processingTask}" action="${ctx}/task/processingTask/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('任务编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="taskCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任务名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="taskName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任务执行人')}：</label>
+					<div class="control-inline">
+						<#form:treeselect id="taskActor" title="执行人选择"
+						path="taskActor" labelPath="actorName"
+						url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('优先级')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="priority" dictType="pm_task_priority" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任务状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="taskStatus" dictType="pm_task_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任务开始日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="taskBeginDate_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="taskBeginDate_lte.click()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="taskBeginDate_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任务结束日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="taskEndDate_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="taskEndDate_lte.click()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="taskEndDate_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("任务编码")}', name:'taskCode', index:'a.task_code', width:150, align:"center"},
+		{header:'${text("任务名称")}', name:'taskName', index:'a.task_name', width:150, align:"center"},
+		{header:'${text("项目编码")}', name:'projectCode', index:'a.project_code', width:150, align:"center"},
+		{header:'${text("任务执行人")}', name:'actorName', index:'o.user_name', width:150, align:"center"},
+		{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
+		{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
+		{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("任务状态")}', name:'taskStatus', index:'a.task_status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('task:processingTask:edit')){ %>
+				actions.push('<a href="${ctx}/task/processingTask/form?id='+row.id+'" class="btnList" title="${text("处理任务信息")}"><i class="fa fa-pencil"></i><span class="actions-text">处理任务</span></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
