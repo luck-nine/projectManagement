@@ -5,6 +5,7 @@ package com.jeesite.modules.task.web;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.ProcessingTask;
@@ -64,6 +65,8 @@ public class ProcessingTaskController extends BaseController {
 	public Page<ProcessingTask> listData(ProcessingTask processingTask, HttpServletRequest request, HttpServletResponse response) {
 		processingTask.setTaskActor("system".equals(UserUtils.getUser().getUserCode()) ? null : UserUtils.getUser().getUserCode());
 		processingTask.setHasEffective(Task.EFFECTIVE);
+		processingTask.getSqlMap().getWhere().andBracket("t.check_status", QueryType.IS_NULL, null, 2)
+				.or("t.check_status", QueryType.EQ, "2", 3).endBracket();
 		processingTask.setPage(new Page<>(request, response));
 		Page<ProcessingTask> page = processingTaskService.findPage(processingTask);
 		return page;
@@ -87,7 +90,9 @@ public class ProcessingTaskController extends BaseController {
 	@ResponseBody
 	public String save(@Validated ProcessingTask processingTask) {
 		processingTaskService.save(processingTask);
-		return renderResult(Global.TRUE, text("保存任务信息成功！"));
+		return null == processingTask.getCheckStatus() || "".equals(processingTask.getCheckStatus()) ?
+				renderResult(Global.TRUE, text("保存任务信息成功！")) :
+				renderResult(Global.TRUE, text("提交任务信息成功！"));
 	}
 	
 	/**

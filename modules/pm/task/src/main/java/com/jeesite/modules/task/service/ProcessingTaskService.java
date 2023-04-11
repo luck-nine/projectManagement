@@ -7,9 +7,14 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.task.dao.ProcessingTaskDao;
+import com.jeesite.modules.task.dao.TaskCheckDao;
 import com.jeesite.modules.task.entity.ProcessingTask;
+import com.jeesite.modules.task.entity.TaskCheck;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 处理任务Service
@@ -19,7 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class ProcessingTaskService extends CrudService<ProcessingTaskDao, ProcessingTask> {
-	
+
+	@Autowired
+	private TaskCheckDao taskCheckDao;
+
 	/**
 	 * 获取单条数据
 	 * @param processingTask
@@ -53,6 +61,16 @@ public class ProcessingTaskService extends CrudService<ProcessingTaskDao, Proces
 		FileUploadUtils.saveFileUpload(processingTask, processingTask.getId(), "task_image");
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(processingTask, processingTask.getId(), "task_file");
+		TaskCheck taskCheck = new TaskCheck();
+		taskCheck.setTaskCode(processingTask);
+		if (null == taskCheck.getCheckStatus()) {
+			taskCheck.setCheckStatus("0");
+			taskCheck.preInsert();
+			taskCheckDao.insert(taskCheck);
+		} else {
+			taskCheck.preUpdate();
+			taskCheckDao.update(taskCheck);
+		}
 	}
 	
 	/**

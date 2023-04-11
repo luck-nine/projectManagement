@@ -3,12 +3,10 @@
  */
 package com.jeesite.modules.task.entity;
 
-import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.List;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -18,10 +16,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 任务信息Entity
  * @author Liuzy
- * @version 2023-04-08
+ * @version 2023-04-11
  */
 @Table(name="pm_task", alias="a", label="任务信息", columns={
-		@Column(name="id", attrName="id", label="标识"),
+		@Column(name="id", attrName="id", label="标识", isUpdate=false, isQuery=false),
 		@Column(name="task_code", attrName="taskCode", label="任务编码", isPK=true),
 		@Column(name="task_name", attrName="taskName", label="任务名称", queryType=QueryType.LIKE),
 		@Column(name="project_code", attrName="projectCode", label="项目编码"),
@@ -59,6 +57,7 @@ public class Task extends DataEntity<Task> {
 	private Date taskBeginDate;		// 任务开始日期
 	private Date taskEndDate;		// 任务结束日期
 	private Integer hasEffective;		// 是否提交（0：否 1：是）
+	private List<TaskCheck> taskCheckList;		// 子表列表
 	
 	public Task() {
 		this(null);
@@ -68,8 +67,6 @@ public class Task extends DataEntity<Task> {
 		super(id);
 	}
 	
-	@NotBlank(message="任务编码不能为空")
-	@Length(min=0, max=64, message="任务编码长度不能超过 64 个字符")
 	public String getTaskCode() {
 		return taskCode;
 	}
@@ -197,6 +194,14 @@ public class Task extends DataEntity<Task> {
 
 	public void setTaskEndDate_lte(Date taskEndDate) {
 		sqlMap.getWhere().and("task_end_date", QueryType.LTE, taskEndDate);
+	}
+	
+	public List<TaskCheck> getTaskCheckList() {
+		return taskCheckList;
+	}
+
+	public void setTaskCheckList(List<TaskCheck> taskCheckList) {
+		this.taskCheckList = taskCheckList;
 	}
 	
 }

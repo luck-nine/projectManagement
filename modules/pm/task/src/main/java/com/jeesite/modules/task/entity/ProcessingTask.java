@@ -33,6 +33,11 @@ import com.jeesite.modules.sys.entity.User;
 				on = "o.user_code=a.task_actor", attrName = "this",
 				columns = {
 						@Column(name = "user_name", attrName = "actorName", label = "任务执行人"),
+				}),
+		@JoinTable(type = JoinTable.Type.LEFT_JOIN, entity = TaskCheck.class, alias = "t",
+				on = "t.task_code=a.task_code", attrName = "this",
+				columns = {
+						@Column(name = "check_status", attrName = "checkStatus", label = "审核状态"),
 				})
 }, orderBy="a.update_date DESC"
 )
@@ -42,6 +47,7 @@ public class ProcessingTask extends Task {
 	private String projectName;			// 项目名称
 	private String userName;		// 项目负责人
 	private String actorName;		// 任务执行人姓名
+	private String checkStatus;		// 审核状态
 
 	public ProcessingTask() {
 		this(null);
@@ -73,5 +79,13 @@ public class ProcessingTask extends Task {
 
 	public void setActorName(String actorName) {
 		this.actorName = actorName;
+	}
+
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
 	}
 }
