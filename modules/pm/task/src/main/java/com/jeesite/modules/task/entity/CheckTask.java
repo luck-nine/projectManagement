@@ -10,9 +10,9 @@ import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.sys.entity.User;
 
 /**
- * 新增任务Entity
+ * 审核任务Entity
  * @author Liuzy
- * @version 2023-04-07
+ * @version 2023-04-10
  */
 @Table(name="pm_task", alias="a", label="任务信息", columns={
 		@Column(includeEntity = Task.class),
@@ -35,18 +35,18 @@ import com.jeesite.modules.sys.entity.User;
 				})
 }, orderBy="p.project_code DESC"
 )
-public class NewTask extends Task {
+public class CheckTask extends Task {
 
 	private static final long serialVersionUID = 1L;
 	private String projectName;			// 项目名称
 	private String userName;		// 项目负责人
 	private String actorName;		// 任务执行人姓名
 
-	public NewTask() {
+	public CheckTask() {
 		this(null);
 	}
 
-	public NewTask(String id){
+	public CheckTask(String id){
 		super(id);
 	}
 

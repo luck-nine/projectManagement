@@ -20,7 +20,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author Liuzy
  * @version 2023-04-08
  */
-@Table(name="pm_task", alias="a", label="任务信息信息", columns={
+@Table(name="pm_task", alias="a", label="任务信息", columns={
 		@Column(name="id", attrName="id", label="标识"),
 		@Column(name="task_code", attrName="taskCode", label="任务编码", isPK=true),
 		@Column(name="task_name", attrName="taskName", label="任务名称", queryType=QueryType.LIKE),
@@ -42,6 +42,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 )
 public class Task extends DataEntity<Task> {
 
+	public static final String WAITING = "0";
+	public static final String EXECUTORY = "1";
+	public static final String COMPLETED = "2";
 	public final static int NOT_EFFECTIVE = 0;
 	public final static int EFFECTIVE = 1;
 	private static final long serialVersionUID = 1L;
