@@ -37,7 +37,7 @@ import com.jeesite.modules.sys.entity.User;
 				on = "t.task_code=a.task_code", attrName = "this",
 				columns = {
 						@Column(name = "check_status", attrName = "checkStatus", label = "审核状态"),
-						@Column(name = "check_opinion", attrName = "checkOpinion", label = "审核意见"),
+						@Column(name = "check_opinion", attrName = "checkOpinion", label = "审核意见")
 				})
 }, orderBy="p.project_code DESC"
 )

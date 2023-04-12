@@ -100,6 +100,9 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("审核状态")}', name:'checkStatus', index:'a.check_status', width:150, align:"center", formatter: function(val, obj, row, act){
+				return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_check_status')}, val, '${text("")}', true);
+			}},
 		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('task:processingTask:edit')){ %>

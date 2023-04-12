@@ -3,7 +3,6 @@
  */
 package com.jeesite.modules.task.entity;
 
-import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
@@ -38,6 +37,7 @@ import com.jeesite.modules.sys.entity.User;
 				on = "t.task_code=a.task_code", attrName = "this",
 				columns = {
 						@Column(name = "check_status", attrName = "checkStatus", label = "审核状态"),
+						@Column(name = "check_opinion", attrName = "checkOpinion", label = "审核意见")
 				})
 }, orderBy="a.update_date DESC"
 )
@@ -48,6 +48,7 @@ public class ProcessingTask extends Task {
 	private String userName;		// 项目负责人
 	private String actorName;		// 任务执行人姓名
 	private String checkStatus;		// 审核状态
+	private String checkOpinion;
 
 	public ProcessingTask() {
 		this(null);
@@ -87,5 +88,13 @@ public class ProcessingTask extends Task {
 
 	public void setCheckStatus(String checkStatus) {
 		this.checkStatus = checkStatus;
+	}
+
+	public String getCheckOpinion() {
+		return checkOpinion;
+	}
+
+	public void setCheckOpinion(String checkOpinion) {
+		this.checkOpinion = checkOpinion;
 	}
 }
