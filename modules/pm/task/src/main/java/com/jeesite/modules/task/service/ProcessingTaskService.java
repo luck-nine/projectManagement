@@ -69,6 +69,7 @@ public class ProcessingTaskService extends CrudService<ProcessingTaskDao, Proces
 			taskCheck.preInsert();
 			taskCheckDao.insert(taskCheck);
 		} else {
+			taskCheck.setCheckStatus(null);
 			taskCheck.preUpdate();
 			taskCheckDao.update(taskCheck);
 		}
