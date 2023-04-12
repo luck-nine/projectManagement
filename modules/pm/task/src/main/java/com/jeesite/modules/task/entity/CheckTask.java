@@ -32,6 +32,12 @@ import com.jeesite.modules.sys.entity.User;
 				on = "o.user_code=a.task_actor", attrName = "this",
 				columns = {
 						@Column(name = "user_name", attrName = "actorName", label = "任务执行人"),
+				}),
+		@JoinTable(type = JoinTable.Type.LEFT_JOIN, entity = TaskCheck.class, alias = "t",
+				on = "t.task_code=a.task_code", attrName = "this",
+				columns = {
+						@Column(name = "check_status", attrName = "checkStatus", label = "审核状态"),
+						@Column(name = "check_opinion", attrName = "checkOpinion", label = "审核意见"),
 				})
 }, orderBy="p.project_code DESC"
 )
@@ -41,6 +47,8 @@ public class CheckTask extends Task {
 	private String projectName;			// 项目名称
 	private String userName;		// 项目负责人
 	private String actorName;		// 任务执行人姓名
+	private String checkStatus;
+	private String checkOpinion;
 
 	public CheckTask() {
 		this(null);
@@ -72,5 +80,21 @@ public class CheckTask extends Task {
 
 	public void setActorName(String actorName) {
 		this.actorName = actorName;
+	}
+
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+
+	public String getCheckOpinion() {
+		return checkOpinion;
+	}
+
+	public void setCheckOpinion(String checkOpinion) {
+		this.checkOpinion = checkOpinion;
 	}
 }

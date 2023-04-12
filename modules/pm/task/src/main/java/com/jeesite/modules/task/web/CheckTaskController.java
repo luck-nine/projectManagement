@@ -6,7 +6,10 @@ package com.jeesite.modules.task.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.CheckTask;
+import com.jeesite.modules.task.entity.Task;
+import com.jeesite.modules.task.entity.TaskCheck;
 import com.jeesite.modules.task.service.CheckTaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -60,6 +63,9 @@ public class CheckTaskController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<CheckTask> listData(CheckTask checkTask, HttpServletRequest request, HttpServletResponse response) {
+		checkTask.setUserName("system".equals(UserUtils.getUser().getUserCode()) ? null : UserUtils.getUser().getUserName());
+		checkTask.setTaskStatus(Task.COMPLETED);
+		checkTask.setCheckStatus(TaskCheck.PENDING);
 		checkTask.setPage(new Page<>(request, response));
 		Page<CheckTask> page = checkTaskService.findPage(checkTask);
 		return page;

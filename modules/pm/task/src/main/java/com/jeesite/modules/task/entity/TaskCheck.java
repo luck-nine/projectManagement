@@ -27,7 +27,10 @@ import com.jeesite.common.mybatis.annotation.Table;
 	}, orderBy="a.create_date ASC"
 )
 public class TaskCheck extends DataEntity<TaskCheck> {
-	
+
+	public static final String PENDING = "0";
+	public static final String FINISHED = "1";
+	public static final String REJECTED = "2";
 	private static final long serialVersionUID = 1L;
 	private Task taskCode;		// 任务编码 父类
 	private String checkStatus;		// 审核状态

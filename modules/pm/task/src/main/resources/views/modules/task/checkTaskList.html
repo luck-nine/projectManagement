@@ -94,9 +94,6 @@ $('#dataGrid').dataGrid({
 		{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text("任务状态")}', name:'taskStatus', index:'a.task_status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
-		}},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
 			var actions = [];
