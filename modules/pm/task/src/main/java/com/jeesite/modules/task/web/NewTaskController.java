@@ -100,7 +100,6 @@ public class NewTaskController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(NewTask newTask, Model model) {
 		if (newTask.getIsNewRecord()) {
-			newTask.setTaskStatus(NewTask.WAITING);
 			newTaskService.buildTaskCode(newTask);
 		}
 		model.addAttribute("newTask", newTask);

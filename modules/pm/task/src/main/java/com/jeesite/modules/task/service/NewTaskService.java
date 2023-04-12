@@ -97,7 +97,7 @@ public class NewTaskService extends CrudService<NewTaskDao, NewTask> {
 			if (existList.size() == 0) {
 				newTask.setTaskCode(taskCode + "001");
 			} else {
-				String lastCode = existList.get(existList.size() - 1).getTaskCode();
+				String lastCode = existList.get(0).getTaskCode();
 				int i = Integer.parseInt(lastCode.substring(9)) + 1;
 				newTask.setTaskCode(taskCode + (i < 10 ? "00" + i : "0" + i));
 			}

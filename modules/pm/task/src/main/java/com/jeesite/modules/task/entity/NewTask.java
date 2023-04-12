@@ -33,7 +33,7 @@ import com.jeesite.modules.sys.entity.User;
 				columns = {
 						@Column(name = "user_name", attrName = "actorName", label = "任务执行人"),
 				})
-}, orderBy="p.project_code DESC"
+}, orderBy="a.task_code DESC"
 )
 public class NewTask extends Task {
 
