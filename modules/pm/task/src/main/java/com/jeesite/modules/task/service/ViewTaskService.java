@@ -6,10 +6,13 @@ package com.jeesite.modules.task.service;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.sys.utils.DictUtils;
 import com.jeesite.modules.task.dao.ViewTaskDao;
 import com.jeesite.modules.task.entity.ViewTask;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 查看任务Service
@@ -74,5 +77,16 @@ public class ViewTaskService extends CrudService<ViewTaskDao, ViewTask> {
 	public void delete(ViewTask viewTask) {
 		super.delete(viewTask);
 	}
-	
+
+	/**
+	 * 处理任务列表数据
+	 * @param list
+	 */
+	public void buildViewList(List<ViewTask> list) {
+		for (ViewTask task : list) {
+			task.setPriority(DictUtils.getDictLabel("pm_task_priority", null != task.getPriority() ? task.getPriority() : "", ""));
+			task.setTaskStatus(DictUtils.getDictLabel("pm_task_status", null != task.getTaskStatus() ? task.getTaskStatus() : "", ""));
+			task.setCheckStatus(DictUtils.getDictLabel("pm_task_check_status", null != task.getCheckStatus() ? task.getCheckStatus() : "", ""));
+		}
+	}
 }

@@ -5,6 +5,8 @@ package com.jeesite.modules.task.web;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.task.entity.ViewTask;
 import com.jeesite.modules.task.service.ViewTaskService;
@@ -12,13 +14,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 查看任务Controller
@@ -49,6 +51,8 @@ public class ViewTaskController extends BaseController {
 	@RequiresPermissions("task:viewTask:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ViewTask viewTask, Model model) {
+		List<ViewTask> list = viewTaskService.findList(viewTask);
+		model.addAttribute("allIds", list.stream().map(ViewTask::getId).toArray(String[]::new));
 		model.addAttribute("viewTask", viewTask);
 		return "modules/task/viewTaskList";
 	}
@@ -96,5 +100,18 @@ public class ViewTaskController extends BaseController {
 		viewTaskService.delete(task);
 		return renderResult(Global.TRUE, text("删除任务信息成功！"));
 	}
-	
+
+	/**
+	 * 导出任务列表数据
+	 */
+	@RequestMapping(value = "exportTaskListData")
+	public void exportTaskListData(ViewTask viewTask, HttpServletResponse response, @RequestParam("ids") String[] ids) {
+		List<ViewTask> list = viewTaskService.findList(viewTask);
+		viewTaskService.buildViewList(list);
+		list = list.stream().filter(x -> Arrays.asList(ids).contains(x.getId())).collect(Collectors.toList());
+		String fileName = "任务列表数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
+		try(ExcelExport ee = new ExcelExport("任务列表数据", ViewTask.class)){
+			ee.setDataList(list).write(response, fileName);
+		}
+	}
 }

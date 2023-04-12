@@ -88,6 +88,7 @@
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
 					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+					<button type="button" class="btn btn-primary btn-sm" id="btnExport">${text('导出')}</button>
 				</div>
 			</#form:form>
 			<table id="dataGrid"></table>
@@ -97,40 +98,80 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
-$('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
-	columnModel: [
-		{header:'${text("任务编码")}', name:'taskCode', index:'a.task_code', width:150, align:"center"},
-		{header:'${text("任务名称")}', name:'taskName', index:'a.task_name', width:150, align:"center"},
-		{header:'${text("项目编码")}', name:'projectCode', index:'a.project_code', width:150, align:"center"},
-		{header:'${text("项目负责人")}', name:'userName', index:'u.user_name', width:150, align:"center"},
-		{header:'${text("任务执行人")}', name:'actorName', index:'o.user_name', width:150, align:"center"},
-		{header:'${text("任务描述")}', name:'taskDescription', index:'a.task_description', width:150, align:"center"},
-		{header:'${text("完成说明")}', name:'accomplishDescription', index:'a.accomplish_description', width:150, align:"center"},
-		{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
-		{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
-		{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
-		}},
-		{header:'${text("任务状态")}', name:'taskStatus', index:'a.task_status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
-		}},
-		{header:'${text("审核状态")}', name:'checkStatus', index:'t.check_status', width:150, align:"center", formatter: function(val, obj, row, act){
-				return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_check_status')}, val, '${text("")}', true);
+	let ids = [];
+	let allIds = ${toJson(allIds)};
+	// 初始化DataGrid对象
+	$('#dataGrid').dataGrid({
+		searchForm: $("#searchForm"),
+		columnModel: [
+			{header:'${text("任务编码")}', name:'taskCode', index:'a.task_code', width:150, align:"center"},
+			{header:'${text("任务名称")}', name:'taskName', index:'a.task_name', width:150, align:"center"},
+			{header:'${text("项目编码")}', name:'projectCode', index:'a.project_code', width:150, align:"center"},
+			{header:'${text("项目负责人")}', name:'userName', index:'u.user_name', width:150, align:"center"},
+			{header:'${text("任务执行人")}', name:'actorName', index:'o.user_name', width:150, align:"center"},
+			{header:'${text("任务描述")}', name:'taskDescription', index:'a.task_description', width:150, align:"center"},
+			{header:'${text("完成说明")}', name:'accomplishDescription', index:'a.accomplish_description', width:150, align:"center"},
+			{header:'${text("任务开始日期")}', name:'taskBeginDate', index:'a.task_begin_date', width:150, align:"center"},
+			{header:'${text("任务结束日期")}', name:'taskEndDate', index:'a.task_end_date', width:150, align:"center"},
+			{header:'${text("优先级")}', name:'priority', index:'a.priority', width:150, align:"center", formatter: function(val, obj, row, act){
+				return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_priority')}, val, '${text("未知")}', true);
 			}},
-		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
-			var actions = [];
-			<% if(hasPermi('task:viewTask:view')){ %>
-				actions.push('<a href="${ctx}/task/viewTask/form?taskCode='+row.taskCode+'" class="btnList" title="${text("查看任务信息")}"><i class="fa fa-search"></i><span class="actions-text">查看</span></a>&nbsp;');
-			<% } %>
-			return actions.join('');
-		}}
-	],
-	// 加载成功后执行事件
-	ajaxSuccess: function(data){
-		
-	}
-});
+			{header:'${text("任务状态")}', name:'taskStatus', index:'a.task_status', width:150, align:"center", formatter: function(val, obj, row, act){
+				return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_status')}, val, '${text("未知")}', true);
+			}},
+			{header:'${text("审核状态")}', name:'checkStatus', index:'t.check_status', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('pm_task_check_status')}, val, '${text("")}', true);
+				}},
+			{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+			{header:'${text("操作")}', name:'actions', width:120, align:"center", formatter: function(val, obj, row, act){
+				var actions = [];
+				<% if(hasPermi('task:viewTask:view')){ %>
+					actions.push('<a href="${ctx}/task/viewTask/form?taskCode='+row.taskCode+'" class="btnList" title="${text("查看任务信息")}"><i class="fa fa-search"></i><span class="actions-text">查看</span></a>&nbsp;');
+				<% } %>
+				return actions.join('');
+			}}
+		],
+		// 是否开启复选框
+		multiselect: true,
+		// 单击复选框时再多选
+		multiboxonly: true,
+
+		// 选择行后调用（id:行id，isSelect：是否是选中，event：事件）
+		onSelectRow: function(id, isSelect, event) {
+			if(isSelect){
+				ids = [...ids, id]	//别忘记声明数组
+			} else {
+				ids = ids.filter(item=>{return item != id}) //取消选中时删除数组中改行id
+			}
+			ids = Array.from(new Set(ids));// 数组去重
+		},
+
+		// 单击列表表头上的全选按钮时调用（ids：选中的id数组，isSelect：是否选中）
+		onSelectAll: function(selectIds, isSelect){
+			selectIds = allIds;
+			if(isSelect){
+				ids = selectIds;
+			} else {
+				ids = [];
+			}
+			ids = Array.from(new Set(ids));
+		},
+		// 加载成功后执行事件
+		ajaxSuccess: function(data){
+			for(let id in ids) {
+				$('#dataGrid').dataGrid('setSelectRow', ids[id], false);// 为true则只留下取消选择的功能
+			}
+		}
+	});
+
+	$('#btnExport').click(function(){
+		if(ids.length != 0) {
+			js.ajaxSubmitForm($('#searchForm'), {
+				url:'${ctx}/task/viewTask/exportTaskListData?ids='+ids,
+				downloadFile:true
+			});
+		} else {
+			js.showMessage("${text('请选择需要导出的任务数据。')}", null, 'warning');
+		}
+	});
 </script>
