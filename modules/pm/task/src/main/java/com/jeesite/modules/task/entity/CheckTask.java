@@ -49,6 +49,7 @@ public class CheckTask extends Task {
 	private String actorName;		// 任务执行人姓名
 	private String checkStatus;
 	private String checkOpinion;
+	private String auditStatus;
 
 	public CheckTask() {
 		this(null);
@@ -96,5 +97,13 @@ public class CheckTask extends Task {
 
 	public void setCheckOpinion(String checkOpinion) {
 		this.checkOpinion = checkOpinion;
+	}
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
 	}
 }

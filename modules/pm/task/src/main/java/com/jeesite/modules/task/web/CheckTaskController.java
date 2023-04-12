@@ -89,7 +89,7 @@ public class CheckTaskController extends BaseController {
 	@ResponseBody
 	public String save(@Validated CheckTask checkTask) {
 		checkTaskService.save(checkTask);
-		return renderResult(Global.TRUE, text("审核任务通过！"));
+		return renderResult(Global.TRUE, text("审核完毕！"));
 	}
 	
 	/**

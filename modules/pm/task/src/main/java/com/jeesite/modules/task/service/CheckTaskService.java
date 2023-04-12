@@ -7,7 +7,10 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.task.dao.CheckTaskDao;
+import com.jeesite.modules.task.dao.TaskCheckDao;
 import com.jeesite.modules.task.entity.CheckTask;
+import com.jeesite.modules.task.entity.TaskCheck;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class CheckTaskService extends CrudService<CheckTaskDao, CheckTask> {
-	
+
+	@Autowired
+	private TaskCheckDao taskCheckDao;
+
 	/**
 	 * 获取单条数据
 	 * @param checkTask
@@ -53,6 +59,16 @@ public class CheckTaskService extends CrudService<CheckTaskDao, CheckTask> {
 		FileUploadUtils.saveFileUpload(checkTask, checkTask.getId(), "task_image");
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(checkTask, checkTask.getId(), "task_file");
+		TaskCheck taskCheck = new TaskCheck();
+		taskCheck.setTaskCode(checkTask);
+		if (TaskCheck.QUALIFIED.equals(checkTask.getAuditStatus())) {
+			taskCheck.setCheckStatus(TaskCheck.FINISHED);
+		} else if (TaskCheck.NOT_QUALIFIED.equals(checkTask.getAuditStatus())) {
+			taskCheck.setCheckStatus(TaskCheck.REJECTED);
+		}
+		taskCheck.setCheckOpinion(checkTask.getCheckOpinion());
+		taskCheck.preUpdate();
+		taskCheckDao.update(taskCheck);
 	}
 	
 	/**

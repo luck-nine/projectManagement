@@ -31,15 +31,17 @@ public class TaskCheck extends DataEntity<TaskCheck> {
 	public static final String PENDING = "0";
 	public static final String FINISHED = "1";
 	public static final String REJECTED = "2";
+	public static final String QUALIFIED = "0";
+	public static final String NOT_QUALIFIED = "1";
 	private static final long serialVersionUID = 1L;
 	private Task taskCode;		// 任务编码 父类
 	private String checkStatus;		// 审核状态
 	private String checkOpinion;		// 审核意见
+	private String auditStatus;
 	
 	public TaskCheck() {
 		this(null);
 	}
-
 
 	public TaskCheck(Task taskCode){
 		this.taskCode = taskCode;
@@ -70,5 +72,12 @@ public class TaskCheck extends DataEntity<TaskCheck> {
 	public void setCheckOpinion(String checkOpinion) {
 		this.checkOpinion = checkOpinion;
 	}
-	
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
+	}
 }

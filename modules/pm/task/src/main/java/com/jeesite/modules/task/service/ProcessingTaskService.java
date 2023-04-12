@@ -64,8 +64,8 @@ public class ProcessingTaskService extends CrudService<ProcessingTaskDao, Proces
 		FileUploadUtils.saveFileUpload(processingTask, processingTask.getId(), "task_file");
 		TaskCheck taskCheck = new TaskCheck();
 		taskCheck.setTaskCode(processingTask);
-		if (null == taskCheck.getCheckStatus() && Task.COMPLETED.equals(processingTask.getTaskStatus())) {
-			taskCheck.setCheckStatus("0");
+		taskCheck.setCheckStatus("0");
+		if (null == processingTask.getCheckStatus() && Task.COMPLETED.equals(processingTask.getTaskStatus())) {
 			taskCheck.preInsert();
 			taskCheckDao.insert(taskCheck);
 		} else {
