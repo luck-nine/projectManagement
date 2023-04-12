@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${newTask}" action="${ctx}/task/newTask/taskListData" method="post" class="form-inline"
+			<#form:form id="searchForm" model="${newTask}" action="${ctx}/task/newTask/taskListData?projectCode=${newTask.projectCode}" method="post" class="form-inline"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('任务编码')}：</label>
