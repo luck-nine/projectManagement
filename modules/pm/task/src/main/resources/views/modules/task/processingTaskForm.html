@@ -175,6 +175,10 @@
 	})
 
 	$('#btnSubmit').click(function () {
+		if ($('#taskStatus').val() == "2") {
+			js.showMessage("${text('当前项目状态为已完成，请提交任务。')}", null, 'warning');
+			return false;
+		}
 		$("*").removeClass('required');
 		$('#inputForm').submit();
 	})

@@ -7,6 +7,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.project.entity.Project;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.NewTask;
 import com.jeesite.modules.task.entity.Task;
 import com.jeesite.modules.task.service.NewTaskService;
@@ -73,6 +74,7 @@ public class NewTaskController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<NewTask> listData(NewTask newTask, HttpServletRequest request, HttpServletResponse response) {
+		newTask.setUserName("system".equals(UserUtils.getUser().getUserCode()) ? null : UserUtils.getUser().getUserName());
 		Page<NewTask> page = new Page<>(request, response);
 		List<NewTask> projectList = newTaskService.findProjectList(newTask);
 		page.setList(projectList);

@@ -90,9 +90,9 @@ public class ProcessingTaskController extends BaseController {
 	@ResponseBody
 	public String save(@Validated ProcessingTask processingTask) {
 		processingTaskService.save(processingTask);
-		return null == processingTask.getCheckStatus() || "".equals(processingTask.getCheckStatus()) ?
-				renderResult(Global.TRUE, text("保存任务信息成功！")) :
-				renderResult(Global.TRUE, text("提交任务信息成功！"));
+		return Task.COMPLETED.equals(processingTask.getTaskStatus()) ?
+				renderResult(Global.TRUE, text("提交任务信息成功！")) :
+				renderResult(Global.TRUE, text("保存任务信息成功！"));
 	}
 	
 	/**

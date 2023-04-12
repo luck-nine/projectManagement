@@ -7,6 +7,7 @@ import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.task.entity.NewTask;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
