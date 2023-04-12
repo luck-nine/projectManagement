@@ -9,6 +9,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.task.dao.ProcessingTaskDao;
 import com.jeesite.modules.task.dao.TaskCheckDao;
 import com.jeesite.modules.task.entity.ProcessingTask;
+import com.jeesite.modules.task.entity.Task;
 import com.jeesite.modules.task.entity.TaskCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class ProcessingTaskService extends CrudService<ProcessingTaskDao, Proces
 		FileUploadUtils.saveFileUpload(processingTask, processingTask.getId(), "task_file");
 		TaskCheck taskCheck = new TaskCheck();
 		taskCheck.setTaskCode(processingTask);
-		if (null == taskCheck.getCheckStatus()) {
+		if (null == taskCheck.getCheckStatus() && Task.COMPLETED.equals(processingTask.getTaskStatus())) {
 			taskCheck.setCheckStatus("0");
 			taskCheck.preInsert();
 			taskCheckDao.insert(taskCheck);
