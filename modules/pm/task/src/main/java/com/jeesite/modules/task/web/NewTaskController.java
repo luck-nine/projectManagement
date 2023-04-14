@@ -6,7 +6,6 @@ package com.jeesite.modules.task.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.project.entity.Project;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.NewTask;
 import com.jeesite.modules.task.entity.Task;
@@ -103,6 +102,7 @@ public class NewTaskController extends BaseController {
 	public String form(NewTask newTask, Model model) {
 		if (newTask.getIsNewRecord()) {
 			newTaskService.buildTaskCode(newTask);
+			newTask.setTaskStatus(Task.WAITING);
 		}
 		model.addAttribute("newTask", newTask);
 		return "modules/task/newProjectTaskForm";
