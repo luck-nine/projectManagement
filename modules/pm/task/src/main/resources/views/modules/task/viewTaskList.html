@@ -133,8 +133,6 @@
 		],
 		// 是否开启复选框
 		multiselect: true,
-		// 单击复选框时再多选
-		multiboxonly: true,
 
 		// 选择行后调用（id:行id，isSelect：是否是选中，event：事件）
 		onSelectRow: function(id, isSelect, event) {
@@ -163,6 +161,11 @@
 			}
 		}
 	});
+
+	// 单击复选框时再多选
+	$("#dataGrid").on('jqGridBeforeSelectRow', function(t, id, e){
+		return $(e.target).hasClass('cbox');
+	})
 
 	$('#btnExport').click(function(){
 		if(ids.length != 0) {
