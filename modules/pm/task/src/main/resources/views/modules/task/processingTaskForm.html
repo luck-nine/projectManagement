@@ -168,7 +168,7 @@
 <script>
 	$('#btnMakeEffective').click(function () {
 		if ($('#taskStatus').val() != "2") {
-			js.showMessage("${text('项目状态为已完成时才可提交。')}", null, 'warning');
+			js.showMessage("${text('任务状态为已完成时才可提交。')}", null, 'warning');
 			return false;
 		}
 		$('#inputForm').submit();
@@ -176,7 +176,7 @@
 
 	$('#btnSubmit').click(function () {
 		if ($('#taskStatus').val() == "2") {
-			js.showMessage("${text('当前项目状态为已完成，若要保存请将项目状态改为执行中。')}", null, 'warning');
+			js.showMessage("${text('当前任务状态为已完成，若要保存请将任务状态改为执行中。')}", null, 'warning');
 			return false;
 		}
 		$("*").removeClass('required');
