@@ -7,7 +7,6 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.project.dao.NewProjectDao;
 import com.jeesite.modules.project.entity.NewProject;
-import com.jeesite.modules.project.entity.Project;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
