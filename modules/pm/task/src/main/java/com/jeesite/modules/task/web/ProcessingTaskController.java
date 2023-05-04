@@ -10,6 +10,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.task.entity.ProcessingTask;
 import com.jeesite.modules.task.entity.Task;
+import com.jeesite.modules.task.entity.TaskCheck;
 import com.jeesite.modules.task.service.ProcessingTaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -89,6 +90,10 @@ public class ProcessingTaskController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated ProcessingTask processingTask) {
+		processingTask.setCheckStatus((Task.COMPLETED.equals(processingTask.getTaskStatus())
+				&& TaskCheck.REJECTED.equals(processingTask.getCheckStatus()))
+				? TaskCheck.PENDING : processingTask.getCheckStatus());
+
 		processingTaskService.save(processingTask);
 		return Task.COMPLETED.equals(processingTask.getTaskStatus()) ?
 				renderResult(Global.TRUE, text("提交任务信息成功！")) :

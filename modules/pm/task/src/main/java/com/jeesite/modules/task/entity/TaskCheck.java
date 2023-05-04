@@ -28,7 +28,7 @@ import com.jeesite.common.mybatis.annotation.Table;
 )
 public class TaskCheck extends DataEntity<TaskCheck> {
 
-	public static final String PENDING = "0";
+	public static final String PENDING = "0"; // 待审核
 	public static final String FINISHED = "1";
 	public static final String REJECTED = "2";
 	public static final String QUALIFIED = "0";

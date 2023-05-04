@@ -63,13 +63,12 @@ public class ProcessingTaskService extends CrudService<ProcessingTaskDao, Proces
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(processingTask, processingTask.getId(), "task_file");
 		TaskCheck taskCheck = new TaskCheck();
+		taskCheck.setCheckStatus(processingTask.getCheckStatus());
 		taskCheck.setTaskCode(processingTask);
-		taskCheck.setCheckStatus(Task.WAITING);
 		if (null == processingTask.getCheckStatus() && Task.COMPLETED.equals(processingTask.getTaskStatus())) {
 			taskCheck.preInsert();
 			taskCheckDao.insert(taskCheck);
 		} else {
-			taskCheck.setCheckStatus(null);
 			taskCheck.preUpdate();
 			taskCheckDao.update(taskCheck);
 		}
